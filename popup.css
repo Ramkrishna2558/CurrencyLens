@@ -1,0 +1,131 @@
+/* CurrencyLens — Popup Styles */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 300px;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: #202124;
+  background: #fff;
+  padding: 16px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.header h1 {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+/* Toggle switch */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #ccc;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.toggle input:checked + .slider { background: #1a73e8; }
+.toggle input:checked + .slider::before { transform: translateX(18px); }
+
+/* Section */
+.section {
+  margin-bottom: 14px;
+}
+.section label {
+  display: block;
+  font-size: 12px;
+  color: #5f6368;
+  margin-bottom: 6px;
+}
+.section select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #dadce0;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #202124;
+  background: #fff;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.section select:focus {
+  border-color: #1a73e8;
+}
+
+/* Info bar */
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+.info span {
+  font-size: 11px;
+  color: #5f6368;
+}
+.info button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #1a73e8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.info button:hover { background: rgba(26,115,232,0.08); }
+.info button:disabled { color: #ccc; cursor: default; }
+
+/* Status */
+.status {
+  font-size: 12px;
+  color: #1a73e8;
+  min-height: 18px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.status.error { color: #d93025; }
+
+/* Footer */
+.footer {
+  font-size: 10px;
+  color: #9aa0a6;
+  text-align: center;
+  border-top: 1px solid #f1f3f4;
+  padding-top: 10px;
+}
+.footer a {
+  color: #5f6368;
+  text-decoration: none;
+}
+.footer a:hover { text-decoration: underline; }

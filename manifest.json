@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "CurrencyLens",
+  "version": "1.0.0",
+  "description": "Instantly convert prices on any webpage to your preferred currency with live exchange rates.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://api.frankfurter.app/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["currencies.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

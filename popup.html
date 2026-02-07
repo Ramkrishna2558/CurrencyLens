@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <h1>💱 CurrencyLens</h1>
+    <label class="toggle">
+      <input type="checkbox" id="enableToggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="section">
+    <label for="targetCurrency">Convert prices to:</label>
+    <select id="targetCurrency"></select>
+  </div>
+
+  <div class="info" id="rateInfo">
+    <span id="rateDate">Loading rates…</span>
+    <button id="refreshBtn" title="Refresh rates">↻</button>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="footer">
+    Rates from <a href="https://www.ecb.europa.eu" target="_blank">ECB</a> via
+    <a href="https://frankfurter.app" target="_blank">Frankfurter</a>
+  </div>
+
+  <script src="currencies.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CurrencyLens — Icon Generator</title>
+  <style>
+    body { font-family: system-ui; padding: 24px; text-align: center; }
+    canvas { border: 1px solid #eee; margin: 8px; }
+    a { display: inline-block; margin: 8px; padding: 8px 16px; background: #1a73e8; color: #fff; border-radius: 6px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h2>CurrencyLens Icon Generator</h2>
+  <p>Click each link below to download the icon, then place them in the <code>icons/</code> folder.</p>
+  <div id="icons"></div>
+
+  <script>
+    const sizes = [16, 48, 128];
+
+    function drawIcon(size) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      // Background circle
+      const r = size / 2;
+      ctx.beginPath();
+      ctx.arc(r, r, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a73e8';
+      ctx.fill();
+
+      // Inner circle highlight
+      ctx.beginPath();
+      ctx.arc(r, r, r * 0.82, 0, Math.PI * 2);
+      ctx.fillStyle = '#4285f4';
+      ctx.fill();
+
+      // Currency symbol
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = `bold ${Math.round(size * 0.48)}px 'Segoe UI', system-ui, sans-serif`;
+      ctx.fillText('💱', r, r + size * 0.02);
+
+      // Fallback: draw text if emoji doesn't render well at small sizes
+      if (size <= 48) {
+        ctx.clearRect(0, 0, size, size);
+        // Redraw background
+        ctx.beginPath();
+        ctx.arc(r, r, r, 0, Math.PI * 2);
+        ctx.fillStyle = '#1a73e8';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(r, r, r * 0.82, 0, Math.PI * 2);
+        ctx.fillStyle = '#4285f4';
+        ctx.fill();
+        // Draw $ and € symbols
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `bold ${Math.round(size * 0.42)}px 'Segoe UI', system-ui, sans-serif`;
+        ctx.fillText('$€', r, r + size * 0.04);
+      }
+
+      return canvas;
+    }
+
+    const container = document.getElementById('icons');
+    for (const size of sizes) {
+      const canvas = drawIcon(size);
+      container.appendChild(canvas);
+
+      const link = document.createElement('a');
+      link.download = `icon${size}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.textContent = `Download ${size}×${size}`;
+      container.appendChild(link);
+
+      container.appendChild(document.createElement('br'));
+    }
+  </script>
+</body>
+</html>

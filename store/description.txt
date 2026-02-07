@@ -1,0 +1,26 @@
+CurrencyLens — Live Currency Conversion on Any Webpage
+
+Instantly see prices converted to your preferred currency, right on the page. No more switching tabs to a converter — CurrencyLens detects prices automatically and shows the converted amount inline.
+
+FEATURES
+• Automatic detection of 30+ currencies by symbol ($, €, £, ¥, ₹, …) and code (USD, EUR, GBP, …)
+• Live exchange rates from the European Central Bank (ECB)
+• Converted prices appear inline, right next to the original — no popups, no overlays
+• Works on any website including shopping sites, travel portals, and news
+• Handles US (1,234.56), European (1.234,56), and plain number formats
+• Dark mode support
+• One-click toggle to enable/disable
+• Zero tracking, zero ads — your browsing stays private
+
+HOW IT WORKS
+1. Install CurrencyLens
+2. Click the extension icon and select your target currency
+3. Browse any website — prices are automatically converted inline
+
+SUPPORTED CURRENCIES
+USD, EUR, GBP, JPY, INR, CAD, AUD, CHF, CNY, SEK, NZD, KRW, SGD, HKD, NOK, MXN, BRL, DKK, PLN, THB, IDR, HUF, CZK, ILS, PHP, TRY, ZAR, MYR, RON, BGN, ISK
+
+PRIVACY
+CurrencyLens only connects to frankfurter.app to fetch exchange rates. It does not collect, store, or transmit any browsing data. All processing happens locally in your browser.
+
+Open source: https://github.com/YOUR_USERNAME/CurrencyLens
