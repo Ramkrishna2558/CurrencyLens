@@ -111,9 +111,10 @@ When settings change in popup, background worker broadcasts `SETTINGS_CHANGED` m
 
 ### Common issues
 - **Icons missing:** Run `generate-icons.html` and place PNGs in `icons/`
-- **Rates not loading:** Check network tab for `api.frankfurter.app` requests, verify `host_permissions` in manifest
+- **Rates not loading:** Check network tab for `open.er-api.com` requests, verify `host_permissions` in manifest
 - **Badges not appearing:** Check console for errors, verify extension is enabled in popup, check if rates are cached in `chrome.storage.local`
 - **Double conversion:** Check if site already has price conversion plugin (conflict)
+- **Noon console noise:** `ERR_BLOCKED_BY_CLIENT` and `Permissions-Policy` warnings are usually site/adblock related and not extension conversion failures
 
 ## API Details
 

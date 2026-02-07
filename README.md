@@ -148,6 +148,12 @@ Before publishing, test these scenarios:
 - [ ] **Settings persistence:** Change currency, refresh page, verify setting persists
 - [ ] **Toggle functionality:** Disable extension, verify badges disappear
 
+### Noon / RTL Notes
+
+- If a site renders the currency symbol and number in separate sibling nodes, XRate now detects that pattern.
+- On Noon, console lines such as `net::ERR_BLOCKED_BY_CLIENT` for Sentry/eTracker/boomerang are usually from ad blockers or browser tracking protection, not from XRate.
+- `Permissions-Policy header: Unrecognized feature: 'browsing-topics'` is site/browser policy noise and does not break conversion.
+
 ## 📤 Publishing to Chrome Web Store
 
 ### Prerequisites

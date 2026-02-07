@@ -19,6 +19,7 @@ const CL_CURRENCIES = {
     '₱':  'PHP',
     '₺':  'TRY',
     '฿':  'THB',
+    '﷼':  'SAR',  // Saudi Riyal symbol
   },
 
   // Multi-char symbols — matched BEFORE single-char to avoid partial matches

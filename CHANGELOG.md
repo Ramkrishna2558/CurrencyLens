@@ -5,6 +5,37 @@ All notable changes to XRate will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-02-07
+
+### Fixed
+- Noon.com price detection when currency symbol and amount are split across sibling DOM nodes
+  - Example handled: symbol node + amount node (such as `﷼` + `4098.95`)
+- Improved RTL handling for separators between currency and amount
+  - Supports hidden direction markers commonly used on Arabic pages
+
+### Docs
+- Added troubleshooting notes for common Noon console noise:
+  - `net::ERR_BLOCKED_BY_CLIENT` requests to analytics/telemetry domains
+  - `Permissions-Policy` warning for `browsing-topics`
+- Clarified that these messages are site/browser or blocker related and not extension failures
+
+## [1.1.2] - 2026-02-07
+
+### Fixed
+- **Critical: INR number parsing bug** - Fixed incorrect decimal handling for Indian Rupee format
+  - ₹92,990 was showing as $1.03 instead of $1,026
+  - Numbers like 92,990 were being parsed as 92.990 (European format)
+  - Now correctly handles Indian number format (12,34,567.89)
+- **Added Saudi Riyal symbol** - Added ﷼ symbol support for Noon.com and other Middle Eastern sites
+  - Noon.com prices now display conversions correctly
+- Added debug logging for troubleshooting
+- Improved number parsing logic to distinguish between comma as thousands separator vs decimal
+
+### Technical Details
+- Fixed `parseLocalNumber` function to check for both comma and period before deciding format
+- Added ﷼ (U+FDFC) to currency symbols map for SAR
+- Added `DEBUG` flag and logging to content.js
+
 ## [1.1.1] - 2026-02-07
 
 ### Fixed
@@ -78,5 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 USD, EUR, GBP, JPY, CHF, CAD, AUD, NZD, CNY, INR, HKD, SGD, KRW, THB, MYR, IDR, PHP, SEK, NOK, DKK, PLN, CZK, HUF, RON, BGN, ISK, TRY, BRL, MXN, ZAR, ILS
 
 [1.1.1]: https://github.com/Ramkrishna2558/XRate/compare/v1.1.0...v1.1.1
+[1.1.3]: https://github.com/Ramkrishna2558/XRate/compare/v1.1.2...v1.1.3
+[1.1.2]: https://github.com/Ramkrishna2558/XRate/compare/v1.1.1...v1.1.2
 [1.1.0]: https://github.com/Ramkrishna2558/XRate/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/Ramkrishna2558/XRate/releases/tag/v1.0.0

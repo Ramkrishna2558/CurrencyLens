@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "XRate",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "description": "Instantly convert prices on any webpage to your preferred currency with live exchange rates. Supports 40+ currencies including Middle Eastern currencies (AED, SAR, QAR, etc.).",
   "permissions": ["storage", "activeTab"],
   "host_permissions": [
