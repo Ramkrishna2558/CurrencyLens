@@ -1,5 +1,5 @@
 /**
- * CurrencyLens — Content Script
+ * XRate — Content Script
  * Detects prices in page text, converts them using cached rates,
  * and injects a subtle badge next to each price.
  */
@@ -133,7 +133,7 @@
     const span = document.createElement('span');
     span.className = BADGE_CLASS;
     span.textContent = ` (≈ ${text})`;
-    span.title = 'Converted by CurrencyLens';
+    span.title = 'Converted by XRate';
     return span;
   }
 
@@ -279,14 +279,45 @@
       if (s) settings = s;
     } catch { /* use defaults */ }
 
-    // Fetch rates
-    try {
-      const data = await chrome.runtime.sendMessage({ type: 'GET_RATES' });
-      if (data && data.rates) rates = data.rates;
-    } catch { /* retry later */ }
+    // Fetch rates with retry logic
+    let retryCount = 0;
+    const maxRetries = 3;
+    const retryDelay = 1000; // 1 second
 
+    async function fetchRatesWithRetry() {
+      try {
+        const data = await chrome.runtime.sendMessage({ type: 'GET_RATES' });
+        if (data && data.rates) {
+          rates = data.rates;
+          return true;
+        }
+      } catch (e) {
+        console.warn('[XRate] Failed to fetch rates:', e);
+      }
+      return false;
+    }
+
+    // Try to fetch rates immediately
+    const success = await fetchRatesWithRetry();
+    
+    // If failed and we have retries left, try again
+    if (!success && retryCount < maxRetries) {
+      setTimeout(async () => {
+        retryCount++;
+        const retrySuccess = await fetchRatesWithRetry();
+        if (retrySuccess && settings.enabled) {
+          scanDocument();
+          setupObserver();
+        }
+      }, retryDelay);
+    }
+
+    // Proceed if we have rates and extension is enabled
     if (settings.enabled && rates) {
       scanDocument();
+      setupObserver();
+    } else if (settings.enabled && !rates) {
+      // Set up observer anyway so dynamic content will be processed when rates arrive
       setupObserver();
     }
   }
@@ -301,6 +332,25 @@
         setupObserver();
       } else if (observer) {
         observer.disconnect();
+      }
+    }
+  });
+
+  // Listen for storage changes (e.g., when rates are fetched)
+  chrome.storage.onChanged.addListener((changes, namespace) => {
+    if (namespace === 'local' && changes.cl_rates) {
+      const newRates = changes.cl_rates.newValue;
+      if (newRates && newRates.rates) {
+        rates = newRates.rates;
+        // If extension is enabled and we just got rates, scan the document
+        if (settings.enabled && !observer) {
+          scanDocument();
+          setupObserver();
+        } else if (settings.enabled) {
+          // Rates updated, re-scan everything
+          removeBadges();
+          scanDocument();
+        }
       }
     }
   });

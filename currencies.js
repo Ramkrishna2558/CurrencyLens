@@ -1,7 +1,7 @@
 /**
- * CurrencyLens — Shared currency configuration.
+ * XRate — Shared currency configuration.
  * Loaded by content scripts (via manifest) and background (via importScripts).
- * Uses frankfurter.app which provides ECB reference rates for ~30 currencies.
+ * Supports 160+ currencies via ExchangeRate-API including Middle Eastern currencies.
  */
 
 /* eslint-disable no-unused-vars */
@@ -39,6 +39,20 @@ const CL_CURRENCIES = {
     'lei': 'RON',
     'лв':  'BGN',
     'CHF': 'CHF',
+    'AED': 'AED',   // UAE Dirham (also written as code)
+    'SAR': 'SAR',   // Saudi Riyal
+    'QAR': 'QAR',   // Qatari Riyal
+    'KWD': 'KWD',   // Kuwaiti Dinar
+    'BHD': 'BHD',   // Bahraini Dinar
+    'OMR': 'OMR',   // Omani Rial
+    'JOD': 'JOD',   // Jordanian Dinar
+    'د.إ': 'AED',   // Arabic Dirham symbol
+    'د.ب': 'BHD',   // Arabic Dinar symbol (Bahrain)
+    'د.ك': 'KWD',   // Arabic Dinar symbol (Kuwait)
+    'د.ع': 'JOD',   // Arabic Dinar symbol (Jordan)
+    'ر.س': 'SAR',   // Arabic Riyal symbol (Saudi)
+    'ر.ق': 'QAR',   // Arabic Riyal symbol (Qatar)
+    'ر.ع': 'OMR',   // Arabic Rial symbol (Oman)
   },
 
   // Metadata for all supported currencies (frankfurter.app / ECB set)
@@ -74,6 +88,17 @@ const CL_CURRENCIES = {
     RON: { name: 'Romanian Leu',        symbol: 'lei', flag: '🇷🇴', decimals: 2 },
     BGN: { name: 'Bulgarian Lev',       symbol: 'лв',  flag: '🇧🇬', decimals: 2 },
     ISK: { name: 'Icelandic Króna',     symbol: 'kr',  flag: '🇮🇸', decimals: 0 },
+    // Middle Eastern currencies
+    AED: { name: 'UAE Dirham',          symbol: 'AED', flag: '🇦🇪', decimals: 2 },
+    SAR: { name: 'Saudi Riyal',         symbol: 'SAR', flag: '🇸🇦', decimals: 2 },
+    QAR: { name: 'Qatari Riyal',        symbol: 'QAR', flag: '🇶🇦', decimals: 2 },
+    KWD: { name: 'Kuwaiti Dinar',       symbol: 'KWD', flag: '🇰🇼', decimals: 3 },
+    BHD: { name: 'Bahraini Dinar',      symbol: 'BHD', flag: '🇧🇭', decimals: 3 },
+    OMR: { name: 'Omani Rial',          symbol: 'OMR', flag: '🇴🇲', decimals: 3 },
+    JOD: { name: 'Jordanian Dinar',     symbol: 'JOD', flag: '🇯🇴', decimals: 3 },
+    EGP: { name: 'Egyptian Pound',      symbol: 'E£',  flag: '🇪🇬', decimals: 2 },
+    IQD: { name: 'Iraqi Dinar',         symbol: 'IQD', flag: '🇮🇶', decimals: 3 },
+    LBP: { name: 'Lebanese Pound',      symbol: 'L£',  flag: '🇱🇧', decimals: 2 },
   },
 };
 

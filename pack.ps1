@@ -1,9 +1,9 @@
-# CurrencyLens — Package for Chrome Web Store
+# XRate — Package for Chrome Web Store
 # Run: .\pack.ps1
 
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$outFile = Join-Path $root 'CurrencyLens.zip'
+$outFile = Join-Path $root 'XRate.zip'
 
 # Files to include in the extension package
 $include = @(
@@ -38,7 +38,7 @@ if ($missing.Count -gt 0) {
 if (Test-Path $outFile) { Remove-Item $outFile }
 
 # Create zip
-$tempDir = Join-Path $env:TEMP "CurrencyLens_pack_$(Get-Date -Format 'yyyyMMddHHmmss')"
+$tempDir = Join-Path $env:TEMP "XRate_pack_$(Get-Date -Format 'yyyyMMddHHmmss')"
 New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
 New-Item -ItemType Directory -Path (Join-Path $tempDir 'icons') -Force | Out-Null
 

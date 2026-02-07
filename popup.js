@@ -1,5 +1,5 @@
 /**
- * CurrencyLens — Popup Script
+ * XRate — Popup Script
  */
 
 const $toggle   = document.getElementById('enableToggle');
@@ -66,7 +66,7 @@ function updateRateInfo(data) {
   }
   const fetchedDate = new Date(data.fetchedAt);
   const timeStr = fetchedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  $rateDate.textContent = `ECB ${data.date} · fetched ${timeStr}`;
+  $rateDate.textContent = `Updated ${data.date} · fetched ${timeStr}`;
 }
 
 /* ---------- Init ---------- */

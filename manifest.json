@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "CurrencyLens",
-  "version": "1.0.0",
-  "description": "Instantly convert prices on any webpage to your preferred currency with live exchange rates.",
+  "name": "XRate",
+  "version": "1.1.1",
+  "description": "Instantly convert prices on any webpage to your preferred currency with live exchange rates. Supports 40+ currencies including Middle Eastern currencies (AED, SAR, QAR, etc.).",
   "permissions": ["storage", "activeTab"],
   "host_permissions": [
-    "https://api.frankfurter.app/*"
+    "https://open.er-api.com/*"
   ],
   "background": {
     "service_worker": "background.js"

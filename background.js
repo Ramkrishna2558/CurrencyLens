@@ -1,25 +1,33 @@
 /**
- * CurrencyLens — Background Service Worker
- * Fetches exchange rates from frankfurter.app (free, no API key, ECB data).
+ * XRate — Background Service Worker
+ * Fetches exchange rates from open.er-api.com (free, no API key, supports 160+ currencies).
  * Caches rates in chrome.storage.local with a configurable TTL.
  */
 
 importScripts('currencies.js');
 
-const API_BASE = 'https://api.frankfurter.app';
+const API_BASE = 'https://open.er-api.com/v6';
 const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 /* ---------- Rate fetching & caching ---------- */
 
 async function fetchRates() {
-  const url = `${API_BASE}/latest?base=USD`;
+  const url = `${API_BASE}/latest/USD`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   const data = await res.json();
 
-  // Normalise: include USD = 1 so cross-rate math works for every pair
-  const rates = { USD: 1, ...data.rates };
-  const cache = { rates, date: data.date, fetchedAt: Date.now() };
+  if (data.result !== 'success') {
+    throw new Error('API returned error status');
+  }
+
+  // Use rates directly (USD is already base with value 1)
+  const rates = data.rates;
+  const cache = { 
+    rates, 
+    date: new Date(data.time_last_update_unix * 1000).toISOString().split('T')[0],
+    fetchedAt: Date.now() 
+  };
 
   await chrome.storage.local.set({ cl_rates: cache });
   return cache;
@@ -74,3 +82,17 @@ chrome.runtime.onInstalled.addListener(() => {
   // Pre-fetch rates on install
   getRates(true).catch(console.error);
 });
+
+// Also fetch rates on browser startup
+chrome.runtime.onStartup.addListener(() => {
+  getRates(false).catch(console.error);
+});
+
+// Ensure rates are available when service worker wakes up
+(async function ensureRates() {
+  try {
+    await getRates(false);
+  } catch (e) {
+    console.error('[XRate] Failed to fetch initial rates:', e);
+  }
+})();
