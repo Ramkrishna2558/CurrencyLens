@@ -5,31 +5,37 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <div class="header">
-    <h1>⚡ XRate</h1>
-    <label class="toggle">
-      <input type="checkbox" id="enableToggle" checked>
-      <span class="slider"></span>
-    </label>
-  </div>
+  <div class="shell">
+    <div class="header">
+      <h1><img src="icons/mudralens-logo.svg" alt="" class="brand-logo">MudraLens</h1>
+      <label class="toggle">
+        <input type="checkbox" id="enableToggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
 
-  <div class="section">
-    <label for="targetCurrency">Convert prices to:</label>
-    <select id="targetCurrency"></select>
-  </div>
+    <div class="section">
+      <label for="currencyTrigger">Target currency</label>
+      <div class="dropdown" id="currencyDropdown">
+        <button type="button" id="currencyTrigger" class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+          <span id="currencyLabel">Select currency</span>
+          <span class="dropdown-caret">&#9662;</span>
+        </button>
+        <div id="currencyMenu" class="dropdown-menu" role="listbox" hidden></div>
+      </div>
+    </div>
 
-  <div class="info" id="rateInfo">
-    <span id="rateDate">Loading rates…</span>
-    <button id="refreshBtn" title="Refresh rates">↻</button>
-  </div>
+    <div class="info" id="rateInfo">
+      <span id="rateDate">Rates unavailable</span>
+      <button id="refreshBtn" title="Refresh rates">&#x21bb;</button>
+    </div>
 
-  <div class="status" id="status"></div>
-
-  <div class="footer">
-    Rates from <a href="https://www.exchangerate-api.com" target="_blank">ExchangeRate-API</a>
+    <div class="status" id="status"></div>
   </div>
 
   <script src="currencies.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
+
+

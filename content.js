@@ -1,5 +1,5 @@
-/**
- * XRate — Content Script
+﻿/**
+ * MudraLens â€” Content Script
  * Detects prices in page text, converts them using cached rates,
  * and injects a subtle badge next to each price.
  */
@@ -12,8 +12,8 @@
   const BADGE_CLASS    = 'cl-converted';
   const DEBUG = false;     // Set to true to enable debug logging
   let settings = { enabled: true, targetCurrency: 'EUR' };
-  let rates = null;        // { USD: 1, EUR: 0.92, … }
-  let symbolMap = null;    // { '$': 'USD', '€': 'EUR', … }
+  let rates = null;        // { USD: 1, EUR: 0.92, â€¦ }
+  let symbolMap = null;    // { '$': 'USD', 'â‚¬': 'EUR', â€¦ }
   let observer = null;
   let debounceTimer = null;
   let processedCount = 0;  // Track how many prices we've processed
@@ -34,16 +34,16 @@
     // If both exist, determine which is decimal separator
     if (lastComma !== -1 && lastPeriod !== -1) {
       if (lastComma > lastPeriod) {
-        // European: 1.234.567,89  →  comma is decimal
+        // European: 1.234.567,89  â†’  comma is decimal
         return parseFloat(str.replace(/\./g, '').replace(',', '.'));
       } else {
-        // US/UK/Indian: 1,234,567.89 or 12,34,567.89  →  period is decimal
+        // US/UK/Indian: 1,234,567.89 or 12,34,567.89  â†’  period is decimal
         return parseFloat(str.replace(/,/g, ''));
       }
     }
 
     if (lastComma !== -1 && lastPeriod === -1) {
-      // Only commas — decide by digit count after last comma
+      // Only commas â€” decide by digit count after last comma
       const afterComma = str.substring(lastComma + 1);
       // If 1-2 digits after comma, it's decimal; if 3, it's thousands
       if (afterComma.length <= 2) {
@@ -94,7 +94,7 @@
 
     // Four flavours:
     //  1) symbol then number        $100
-    //  2) number then symbol        100€
+    //  2) number then symbol        100â‚¬
     //  3) code then number          USD 100
     //  4) number then code          100 USD
     return new RegExp(
@@ -148,8 +148,7 @@
   function createBadge(text) {
     const span = document.createElement('span');
     span.className = BADGE_CLASS;
-    span.textContent = ` (~ ${text})`;
-    span.title = 'Converted by XRate';
+    span.textContent = text;
     return span;
   }
 
@@ -223,7 +222,10 @@
         parent.insertBefore(wrapper, a);
         wrapper.appendChild(a);
         wrapper.appendChild(b);
-        parent.insertBefore(createBadge(formatConverted(converted, settings.targetCurrency)), wrapper.nextSibling);
+        parent.insertBefore(
+          createBadge(formatConverted(converted, settings.targetCurrency)),
+          wrapper.nextSibling
+        );
 
         i++;
       }
@@ -244,8 +246,8 @@
     let m;
 
     // Debug: Log text nodes containing price-like patterns
-    if (DEBUG && /[0-9]{2,}/.test(text) && /[€$£¥₹฿]/.test(text)) {
-      console.log('[XRate Debug] Checking text:', text.substring(0, 100));
+    if (DEBUG && /[0-9]{2,}/.test(text) && /[â‚¬$Â£Â¥â‚¹à¸¿]/.test(text)) {
+      console.log('[MudraLens Debug] Checking text:', text.substring(0, 100));
     }
 
     while ((m = regex.exec(text)) !== null) {
@@ -265,25 +267,25 @@
 
       const fromCode = symbolMap[currencyStr];
       if (!fromCode) {
-        if (DEBUG) console.log('[XRate Debug] Unknown currency symbol:', currencyStr);
+        if (DEBUG) console.log('[MudraLens Debug] Unknown currency symbol:', currencyStr);
         continue;
       }
 
       const amount = parseLocalNumber(numStr);
       if (isNaN(amount) || amount <= 0 || amount > 1e12) {
-        if (DEBUG) console.log('[XRate Debug] Invalid amount:', numStr, '→', amount);
+        if (DEBUG) console.log('[MudraLens Debug] Invalid amount:', numStr, 'â†’', amount);
         continue;
       }
 
       const converted = convert(amount, fromCode, settings.targetCurrency);
       if (converted === null) {
-        if (DEBUG) console.log('[XRate Debug] Conversion failed:', amount, fromCode, '→', settings.targetCurrency);
+        if (DEBUG) console.log('[MudraLens Debug] Conversion failed:', amount, fromCode, 'â†’', settings.targetCurrency);
         continue;
       }
 
       if (DEBUG) {
         processedCount++;
-        console.log(`[XRate Debug] Match #${processedCount}:`, {
+        console.log(`[MudraLens Debug] Match #${processedCount}:`, {
           original: m[0],
           from: `${currencyStr} ${amount} (${fromCode})`,
           to: `${formatConverted(converted, settings.targetCurrency)} (${settings.targetCurrency})`
@@ -410,7 +412,7 @@
           return true;
         }
       } catch (e) {
-        console.warn('[XRate] Failed to fetch rates:', e);
+        console.warn('[MudraLens] Failed to fetch rates:', e);
       }
       return false;
     }
@@ -480,3 +482,4 @@
     init();
   }
 })();
+

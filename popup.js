@@ -1,28 +1,62 @@
 /**
- * XRate — Popup Script
+ * MudraLens - Popup Script
  */
 
 const $toggle   = document.getElementById('enableToggle');
-const $currency = document.getElementById('targetCurrency');
+const $currencyDropdown = document.getElementById('currencyDropdown');
+const $currencyTrigger = document.getElementById('currencyTrigger');
+const $currencyLabel = document.getElementById('currencyLabel');
+const $currencyMenu = document.getElementById('currencyMenu');
 const $rateDate = document.getElementById('rateDate');
 const $refresh  = document.getElementById('refreshBtn');
 const $status   = document.getElementById('status');
+let selectedCurrency = 'EUR';
 
 /* ---------- Populate currency dropdown ---------- */
 
 function populateDropdown(selectedCode) {
-  $currency.innerHTML = '';
+  $currencyMenu.innerHTML = '';
+  selectedCurrency = selectedCode;
   const codes = Object.keys(CL_CURRENCIES.codes).sort((a, b) => {
     return CL_CURRENCIES.codes[a].name.localeCompare(CL_CURRENCIES.codes[b].name);
   });
+
+  function formatCurrency(code) {
+    const meta = CL_CURRENCIES.codes[code];
+    return `${code} - ${meta.name}`;
+  }
+
+  $currencyLabel.textContent = formatCurrency(selectedCode);
+
   for (const code of codes) {
     const meta = CL_CURRENCIES.codes[code];
-    const opt = document.createElement('option');
-    opt.value = code;
-    opt.textContent = `${meta.flag} ${code} — ${meta.name}`;
-    if (code === selectedCode) opt.selected = true;
-    $currency.appendChild(opt);
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'dropdown-item' + (code === selectedCode ? ' selected' : '');
+    item.setAttribute('role', 'option');
+    item.setAttribute('aria-selected', code === selectedCode ? 'true' : 'false');
+    item.textContent = `${code} - ${meta.name}`;
+    item.addEventListener('click', async () => {
+      selectedCurrency = code;
+      $currencyLabel.textContent = formatCurrency(code);
+      closeDropdown();
+      await saveSettings();
+      populateDropdown(selectedCurrency);
+    });
+    $currencyMenu.appendChild(item);
   }
+}
+
+function openDropdown() {
+  $currencyMenu.hidden = false;
+  $currencyDropdown.classList.add('open');
+  $currencyTrigger.setAttribute('aria-expanded', 'true');
+}
+
+function closeDropdown() {
+  $currencyMenu.hidden = true;
+  $currencyDropdown.classList.remove('open');
+  $currencyTrigger.setAttribute('aria-expanded', 'false');
 }
 
 /* ---------- Save settings ---------- */
@@ -30,7 +64,7 @@ function populateDropdown(selectedCode) {
 async function saveSettings() {
   const settings = {
     enabled: $toggle.checked,
-    targetCurrency: $currency.value,
+    targetCurrency: selectedCurrency,
   };
   await chrome.runtime.sendMessage({ type: 'SET_SETTINGS', settings });
   showStatus($toggle.checked ? 'Active' : 'Paused');
@@ -46,14 +80,14 @@ function showStatus(msg, isError = false) {
 
 async function refreshRates() {
   $refresh.disabled = true;
-  $rateDate.textContent = 'Updating…';
+  $rateDate.textContent = 'Syncing rates...';
   try {
     const data = await chrome.runtime.sendMessage({ type: 'GET_RATES', force: true });
     if (data.error) throw new Error(data.error);
     updateRateInfo(data);
-    showStatus('Rates updated');
+    showStatus('Synced');
   } catch (e) {
-    showStatus('Update failed: ' + e.message, true);
+    showStatus('Sync failed', true);
   } finally {
     $refresh.disabled = false;
   }
@@ -61,12 +95,10 @@ async function refreshRates() {
 
 function updateRateInfo(data) {
   if (!data || !data.date) {
-    $rateDate.textContent = 'No rate data';
+    $rateDate.textContent = 'Rates unavailable';
     return;
   }
-  const fetchedDate = new Date(data.fetchedAt);
-  const timeStr = fetchedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  $rateDate.textContent = `Updated ${data.date} · fetched ${timeStr}`;
+  $rateDate.textContent = 'Rates ready';
 }
 
 /* ---------- Init ---------- */
@@ -81,15 +113,23 @@ async function init() {
   try {
     const data = await chrome.runtime.sendMessage({ type: 'GET_RATES' });
     if (data && !data.error) updateRateInfo(data);
-    else $rateDate.textContent = 'No rate data yet';
+    else $rateDate.textContent = 'Rates unavailable';
   } catch {
-    $rateDate.textContent = 'Unable to fetch rates';
+    $rateDate.textContent = 'Rates unavailable';
   }
 
   // Events
   $toggle.addEventListener('change', saveSettings);
-  $currency.addEventListener('change', saveSettings);
   $refresh.addEventListener('click', refreshRates);
+  $currencyTrigger.addEventListener('click', () => {
+    if ($currencyMenu.hidden) openDropdown();
+    else closeDropdown();
+  });
+  document.addEventListener('click', (e) => {
+    if (!$currencyDropdown.contains(e.target)) closeDropdown();
+  });
 }
 
 init();
+
+

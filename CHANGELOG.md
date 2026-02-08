@@ -1,6 +1,6 @@
-# Changelog
+﻿# Changelog
 
-All notable changes to XRate will be documented in this file.
+All notable changes to MudraLens will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Noon.com price detection when currency symbol and amount are split across sibling DOM nodes
-  - Example handled: symbol node + amount node (such as `﷼` + `4098.95`)
+  - Example handled: symbol node + amount node (such as `ï·¼` + `4098.95`)
 - Improved RTL handling for separators between currency and amount
   - Supports hidden direction markers commonly used on Arabic pages
 
@@ -23,17 +23,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - **Critical: INR number parsing bug** - Fixed incorrect decimal handling for Indian Rupee format
-  - ₹92,990 was showing as $1.03 instead of $1,026
+  - â‚¹92,990 was showing as $1.03 instead of $1,026
   - Numbers like 92,990 were being parsed as 92.990 (European format)
   - Now correctly handles Indian number format (12,34,567.89)
-- **Added Saudi Riyal symbol** - Added ﷼ symbol support for Noon.com and other Middle Eastern sites
+- **Added Saudi Riyal symbol** - Added ï·¼ symbol support for Noon.com and other Middle Eastern sites
   - Noon.com prices now display conversions correctly
 - Added debug logging for troubleshooting
 - Improved number parsing logic to distinguish between comma as thousands separator vs decimal
 
 ### Technical Details
 - Fixed `parseLocalNumber` function to check for both comma and period before deciding format
-- Added ﷼ (U+FDFC) to currency symbols map for SAR
+- Added ï·¼ (U+FDFC) to currency symbols map for SAR
 - Added `DEBUG` flag and logging to content.js
 
 ## [1.1.1] - 2026-02-07
@@ -57,17 +57,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2026-02-07
 
 ### Added
-- **Middle Eastern & Gulf Currency Support** 🏜️
-  - AED (UAE Dirham) - د.إ
-  - SAR (Saudi Riyal) - ر.س
-  - QAR (Qatari Riyal) - ر.ق
-  - KWD (Kuwaiti Dinar) - د.ك
-  - BHD (Bahraini Dinar) - د.ب
-  - OMR (Omani Rial) - ر.ع
-  - JOD (Jordanian Dinar) - د.ع
-  - EGP (Egyptian Pound) - E£
+- **Middle Eastern & Gulf Currency Support** ðŸœï¸
+  - AED (UAE Dirham) - Ø¯.Ø¥
+  - SAR (Saudi Riyal) - Ø±.Ø³
+  - QAR (Qatari Riyal) - Ø±.Ù‚
+  - KWD (Kuwaiti Dinar) - Ø¯.Ùƒ
+  - BHD (Bahraini Dinar) - Ø¯.Ø¨
+  - OMR (Omani Rial) - Ø±.Ø¹
+  - JOD (Jordanian Dinar) - Ø¯.Ø¹
+  - EGP (Egyptian Pound) - EÂ£
   - IQD (Iraqi Dinar)
-  - LBP (Lebanese Pound) - L£
+  - LBP (Lebanese Pound) - LÂ£
 - Arabic script support for currency symbols
 - Support for 160+ currencies (up from 30+)
 
@@ -100,7 +100,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chrome Manifest V3 compliance
 - Popup UI for settings and currency selection
 - 1-hour rate caching
-- Support for currency symbols ($, €, £, ¥, ₹, etc.) and ISO codes
+- Support for currency symbols ($, â‚¬, Â£, Â¥, â‚¹, etc.) and ISO codes
 - Smart number parsing for localized formats
 - TreeWalker-based DOM scanning
 - Fragment-based badge injection
@@ -108,8 +108,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Supported Currencies (v1.0.0)
 USD, EUR, GBP, JPY, CHF, CAD, AUD, NZD, CNY, INR, HKD, SGD, KRW, THB, MYR, IDR, PHP, SEK, NOK, DKK, PLN, CZK, HUF, RON, BGN, ISK, TRY, BRL, MXN, ZAR, ILS
 
-[1.1.1]: https://github.com/Ramkrishna2558/XRate/compare/v1.1.0...v1.1.1
-[1.1.3]: https://github.com/Ramkrishna2558/XRate/compare/v1.1.2...v1.1.3
-[1.1.2]: https://github.com/Ramkrishna2558/XRate/compare/v1.1.1...v1.1.2
-[1.1.0]: https://github.com/Ramkrishna2558/XRate/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/Ramkrishna2558/XRate/releases/tag/v1.0.0
+[1.1.1]: https://github.com/Ramkrishna2558/MudraLens/compare/v1.1.0...v1.1.1
+[1.1.3]: https://github.com/Ramkrishna2558/MudraLens/compare/v1.1.2...v1.1.3
+[1.1.2]: https://github.com/Ramkrishna2558/MudraLens/compare/v1.1.1...v1.1.2
+[1.1.0]: https://github.com/Ramkrishna2558/MudraLens/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/Ramkrishna2558/MudraLens/releases/tag/v1.0.0
+

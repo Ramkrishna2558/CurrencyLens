@@ -1,9 +1,9 @@
-# XRate — Package for Chrome Web Store
+﻿# MudraLens â€” Package for Chrome Web Store
 # Run: .\pack.ps1
 
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$outFile = Join-Path $root 'XRate.zip'
+$outFile = Join-Path $root 'MudraLens.zip'
 
 # Files to include in the extension package
 $include = @(
@@ -15,6 +15,7 @@ $include = @(
     'popup.html',
     'popup.js',
     'popup.css',
+    'icons\mudralens-logo.svg',
     'icons\icon16.png',
     'icons\icon48.png',
     'icons\icon128.png'
@@ -38,7 +39,7 @@ if ($missing.Count -gt 0) {
 if (Test-Path $outFile) { Remove-Item $outFile }
 
 # Create zip
-$tempDir = Join-Path $env:TEMP "XRate_pack_$(Get-Date -Format 'yyyyMMddHHmmss')"
+$tempDir = Join-Path $env:TEMP "MudraLens_pack_$(Get-Date -Format 'yyyyMMddHHmmss')"
 New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
 New-Item -ItemType Directory -Path (Join-Path $tempDir 'icons') -Force | Out-Null
 
@@ -51,3 +52,4 @@ Remove-Item $tempDir -Recurse -Force
 
 $size = [math]::Round((Get-Item $outFile).Length / 1KB, 1)
 Write-Host "Packaged: $outFile ($size KB)" -ForegroundColor Green
+

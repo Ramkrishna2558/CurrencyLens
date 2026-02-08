@@ -1,5 +1,5 @@
-/**
- * XRate — Background Service Worker
+﻿/**
+ * MudraLens â€” Background Service Worker
  * Fetches exchange rates from open.er-api.com (free, no API key, supports 160+ currencies).
  * Caches rates in chrome.storage.local with a configurable TTL.
  */
@@ -93,6 +93,7 @@ chrome.runtime.onStartup.addListener(() => {
   try {
     await getRates(false);
   } catch (e) {
-    console.error('[XRate] Failed to fetch initial rates:', e);
+    console.error('[MudraLens] Failed to fetch initial rates:', e);
   }
 })();
+

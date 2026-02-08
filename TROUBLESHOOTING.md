@@ -1,4 +1,4 @@
-# XRate Troubleshooting
+﻿# MudraLens Troubleshooting
 
 ## Noon.com prices not converting
 
@@ -12,7 +12,7 @@
 
 ## Console errors you posted
 
-These are usually unrelated to XRate conversion logic:
+These are usually unrelated to MudraLens conversion logic:
 
 - `net::ERR_BLOCKED_BY_CLIENT`
   - Commonly caused by ad blockers/privacy filters blocking telemetry domains.
@@ -24,7 +24,7 @@ These are usually unrelated to XRate conversion logic:
 
 - Noon `400` API responses in site scripts
   - Site-internal API behavior.
-  - Not an indicator that XRate failed.
+  - Not an indicator that MudraLens failed.
 
 ## Fast verification steps
 
@@ -40,9 +40,10 @@ console.log('badges:', document.querySelectorAll('.cl-converted').length);
 
 1. In `content.js`, set `const DEBUG = true`.
 2. Reload extension and refresh page.
-3. Check logs prefixed with `[XRate Debug]`.
+3. Check logs prefixed with `[MudraLens Debug]`.
 
 ## Known limits
 - No conversion for prices rendered as image/canvas/SVG text.
 - No conversion inside cross-origin iframes.
 - No shadow-root traversal unless explicitly implemented.
+
