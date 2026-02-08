@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "XRate",
-  "version": "1.1.1",
-  "description": "Instantly convert prices on any webpage to your preferred currency with live exchange rates. Supports 40+ currencies including Middle Eastern currencies (AED, SAR, QAR, etc.).",
+  "name": "MudraLens",
+  "version": "1.1.3",
+  "description": "MudraLens - a currency conversion tool straight from web-apps.",
   "permissions": ["storage", "activeTab"],
   "host_permissions": [
     "https://open.er-api.com/*"
@@ -32,3 +32,5 @@
     "128": "icons/icon128.png"
   }
 }
+
+

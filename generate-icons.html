@@ -1,21 +1,36 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CurrencyLens — Icon Generator</title>
+  <title>MudraLens - Icon Generator</title>
   <style>
-    body { font-family: system-ui; padding: 24px; text-align: center; }
-    canvas { border: 1px solid #eee; margin: 8px; }
-    a { display: inline-block; margin: 8px; padding: 8px 16px; background: #1a73e8; color: #fff; border-radius: 6px; text-decoration: none; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; text-align: center; background: linear-gradient(145deg, #fff6eb, #f2ddc4); }
+    h2 { margin: 0 0 6px; color: #5e3c1f; }
+    p { color: #7b5635; }
+    .card { display: inline-block; padding: 16px; border-radius: 16px; background: rgba(255,250,243,.7); border: 1px solid rgba(180,125,71,.35); backdrop-filter: blur(10px); }
+    canvas { border: 1px solid rgba(180,125,71,.25); border-radius: 10px; margin: 8px; background: #fffdf9; }
+    a { display: inline-block; margin: 8px; padding: 8px 14px; background: #b5783f; color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; }
   </style>
 </head>
 <body>
-  <h2>CurrencyLens Icon Generator</h2>
-  <p>Click each link below to download the icon, then place them in the <code>icons/</code> folder.</p>
-  <div id="icons"></div>
+  <div class="card">
+    <h2>MudraLens Icon Generator</h2>
+    <p>Generate and download <code>icon16.png</code>, <code>icon48.png</code>, <code>icon128.png</code>.</p>
+    <div id="icons"></div>
+  </div>
 
   <script>
     const sizes = [16, 48, 128];
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
 
     function drawIcon(size) {
       const canvas = document.createElement('canvas');
@@ -23,43 +38,37 @@
       canvas.height = size;
       const ctx = canvas.getContext('2d');
 
-      // Background circle
-      const r = size / 2;
-      ctx.beginPath();
-      ctx.arc(r, r, r, 0, Math.PI * 2);
-      ctx.fillStyle = '#1a73e8';
+      const pad = Math.max(1, Math.round(size * 0.05));
+      const radius = Math.max(3, Math.round(size * 0.2));
+
+      const bg = ctx.createLinearGradient(0, 0, size, size);
+      bg.addColorStop(0, '#fff6eb');
+      bg.addColorStop(1, '#d9ac7a');
+      roundRect(ctx, pad, pad, size - pad * 2, size - pad * 2, radius);
+      ctx.fillStyle = bg;
       ctx.fill();
 
-      // Inner circle highlight
-      ctx.beginPath();
-      ctx.arc(r, r, r * 0.82, 0, Math.PI * 2);
-      ctx.fillStyle = '#4285f4';
-      ctx.fill();
+      roundRect(ctx, pad + 1, pad + 1, size - (pad + 1) * 2, size - (pad + 1) * 2, radius - 1);
+      ctx.strokeStyle = 'rgba(180,125,71,0.55)';
+      ctx.lineWidth = Math.max(1, Math.round(size * 0.03));
+      ctx.stroke();
 
-      // Currency symbol
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#6f4525';
+      ctx.font = `bold ${Math.round(size * 0.42)}px 'Segoe UI', sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.font = `bold ${Math.round(size * 0.48)}px 'Segoe UI', system-ui, sans-serif`;
-      ctx.fillText('💱', r, r + size * 0.02);
+      ctx.fillText('M', Math.round(size * 0.42), Math.round(size * 0.56));
 
-      // Fallback: draw text if emoji doesn't render well at small sizes
-      if (size <= 48) {
-        ctx.clearRect(0, 0, size, size);
-        // Redraw background
-        ctx.beginPath();
-        ctx.arc(r, r, r, 0, Math.PI * 2);
-        ctx.fillStyle = '#1a73e8';
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(r, r, r * 0.82, 0, Math.PI * 2);
-        ctx.fillStyle = '#4285f4';
-        ctx.fill();
-        // Draw $ and € symbols
-        ctx.fillStyle = '#ffffff';
-        ctx.font = `bold ${Math.round(size * 0.42)}px 'Segoe UI', system-ui, sans-serif`;
-        ctx.fillText('$€', r, r + size * 0.04);
-      }
+      ctx.beginPath();
+      ctx.arc(Math.round(size * 0.70), Math.round(size * 0.53), Math.max(2, Math.round(size * 0.14)), 0, Math.PI * 2);
+      ctx.strokeStyle = '#6f4525';
+      ctx.lineWidth = Math.max(1, Math.round(size * 0.06));
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(Math.round(size * 0.78), Math.round(size * 0.63));
+      ctx.lineTo(Math.round(size * 0.88), Math.round(size * 0.73));
+      ctx.stroke();
 
       return canvas;
     }
@@ -72,7 +81,7 @@
       const link = document.createElement('a');
       link.download = `icon${size}.png`;
       link.href = canvas.toDataURL('image/png');
-      link.textContent = `Download ${size}×${size}`;
+      link.textContent = `Download ${size}x${size}`;
       container.appendChild(link);
 
       container.appendChild(document.createElement('br'));

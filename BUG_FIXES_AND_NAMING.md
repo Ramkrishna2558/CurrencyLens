@@ -1,6 +1,6 @@
-# Bug Fixes & Extension Naming Suggestions
+﻿# Bug Fixes & Extension Naming Suggestions
 
-## 🐛 Bug Fixes Applied (v1.1.1)
+## ðŸ› Bug Fixes Applied (v1.1.1)
 
 ### Issue: Extension Not Loading on First Page Load
 
@@ -32,7 +32,7 @@ async function fetchRatesWithRetry() {
       return true;
     }
   } catch (e) {
-    console.warn('[CurrencyLens] Failed to fetch rates:', e);
+    console.warn('[MudraLens] Failed to fetch rates:', e);
   }
   return false;
 }
@@ -68,45 +68,45 @@ chrome.runtime.onStartup.addListener(() => {
   try {
     await getRates(false);
   } catch (e) {
-    console.error('[CurrencyLens] Failed to fetch initial rates:', e);
+    console.error('[MudraLens] Failed to fetch initial rates:', e);
   }
 })();
 ```
 
 ### Expected Behavior After Fix:
-✅ Extension loads and displays conversions immediately on first page load
-✅ Works consistently across all websites (BestBuy, Amazon, etc.)
-✅ Gracefully handles network delays or API issues
-✅ Automatically retries if rates aren't available initially
-✅ Reacts to rate updates in real-time
+âœ… Extension loads and displays conversions immediately on first page load
+âœ… Works consistently across all websites (BestBuy, Amazon, etc.)
+âœ… Gracefully handles network delays or API issues
+âœ… Automatically retries if rates aren't available initially
+âœ… Reacts to rate updates in real-time
 
 ---
 
-## 🎯 Extension Naming Suggestions
+## ðŸŽ¯ Extension Naming Suggestions
 
 ### Why Rename?
 
-Current name "CurrencyLens" is good but could be improved:
+Current name "MudraLens" is good but could be improved:
 - Too long for quick recall
 - "Lens" metaphor not immediately clear
 - Similar names exist in the extension store
 - Better branding opportunities available
 
 ### Naming Criteria:
-- ✅ Short and memorable (1-2 words)
-- ✅ Clear purpose
-- ✅ Easy to spell and pronounce
-- ✅ Works internationally
-- ✅ Domain availability likely
-- ✅ Unique in Chrome Web Store
+- âœ… Short and memorable (1-2 words)
+- âœ… Clear purpose
+- âœ… Easy to spell and pronounce
+- âœ… Works internationally
+- âœ… Domain availability likely
+- âœ… Unique in Chrome Web Store
 
 ---
 
-## 💡 Name Suggestions (Categorized)
+## ðŸ’¡ Name Suggestions (Categorized)
 
-### 🏆 Top Tier Recommendations
+### ðŸ† Top Tier Recommendations
 
-#### 1. **PricePort** ⭐ (Best Overall)
+#### 1. **PricePort** â­ (Best Overall)
 - **Pros:** Short, professional, clear metaphor (port = gateway), memorable
 - **Cons:** None significant
 - **Why it works:** "Port" suggests translation/conversion perfectly
@@ -152,7 +152,7 @@ Current name "CurrencyLens" is good but could be improved:
    - Modern "-ify" suffix (like Spotify, Shopify)
    - Implies transformation
 
-9. **XRate** (X = Exchange)
+9. **MudraLens** (X = Exchange)
    - Ultra-short
    - Tech-forward naming
 
@@ -202,7 +202,7 @@ Current name "CurrencyLens" is good but could be improved:
 
 ---
 
-## 🎨 Rebranding Checklist
+## ðŸŽ¨ Rebranding Checklist
 
 If you decide to rename, update these files:
 
@@ -219,7 +219,7 @@ If you decide to rename, update these files:
 
 ---
 
-## 📊 My Personal Ranking
+## ðŸ“Š My Personal Ranking
 
 1. **PricePort** - Perfect balance of professional and memorable
 2. **Convertly** - Modern and trendy, great for marketing
@@ -227,6 +227,7 @@ If you decide to rename, update these files:
 4. **Pricify** - Modern, but might be too playful
 5. **QuickConvert** - Safe choice, clear purpose
 
-**Winner: PricePort** 🏆
+**Winner: PricePort** ðŸ†
 
 Would you like me to apply the rename to all files once you choose a name?
+
